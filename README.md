@@ -1,2 +1,22 @@
-# rocketseat-ignite-githubblog
-Repositório do projeto de construção de um blog usando o github
+# Github blog
+Projeto 03 - Desafio curso ignite rockeseat
+
+
+# Tecnologias utilizadas
+- Vite
+- React
+- Typescript
+
+
+# Libs
+- React Hook Form
+- React Router
+- Styled components
+- Zod
+
+# Desenvolvimento
+Para iniciar o desenvolvimento, digite: `yarn dev`
+
+# Produção
+Para gerar para produção, digite: `yarn build`
+
