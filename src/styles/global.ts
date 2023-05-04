@@ -13,6 +13,8 @@ export const GlobalStyles = createGlobalStyle`
     body {
       font-family: ${theme.fontBase};
       -webkit-font-smoothing: antialiased;
+      background-color: ${theme.palette['base-background']};
+      color: ${theme.palette['base-text']};
     }
   `}
 `
