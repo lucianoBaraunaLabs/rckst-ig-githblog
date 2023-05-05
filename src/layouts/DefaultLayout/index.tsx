@@ -1,36 +1,47 @@
 import { Outlet } from 'react-router-dom'
-import GithubLogo from '@/assets/images/logo.svg'
+import GithubLogoImg from '@/assets/images/logo.svg'
 import GithubBackground from '@/assets/images/background-tech.jpg'
 import * as S from './styles.ts'
+import { ArrowSquareOut, Buildings, GithubLogo, Users } from 'phosphor-react'
 
 export function DefaultLayout() {
   return (
     <>
       <S.WrapperBackground>
         <S.ImgGithubBackground src={GithubBackground} aria-hidden />
-        <S.ImgGithubLogo src={GithubLogo} alt="Github Blog" />
+        <S.ImgGithubLogo src={GithubLogoImg} alt="Github Blog" />
       </S.WrapperBackground>
       <S.Content>
         <S.Header>
-          <img src="" alt="Imagem aqui" />
-          <div>
-            <div>
-              <h2>
-                Luciano Baraúna <a href="#">Github</a>
-              </h2>
-            </div>
-            <p>
+          <S.HeaderImg src="https://picsum.photos/500/500" alt="Imagem aqui" />
+          <S.HeaderContent>
+            <S.HeaderTitle>
+              Luciano Baraúna{' '}
+              <S.GithubLink href="#">
+                GITHUB <ArrowSquareOut weight="bold" />
+              </S.GithubLink>
+            </S.HeaderTitle>
+            <S.HeaderTxt>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. A,
               asperiores repellat accusantium voluptatum quod, amet repudiandae,
               labore ea nisi repellendus quasi! Corporis soluta quod dolores
               fuga adipisci dicta numquam accusamus?
-            </p>
-            <ul>
-              <li>github name</li>
-              <li>organização</li>
-              <li>seguidores</li>
-            </ul>
-          </div>
+            </S.HeaderTxt>
+            <S.HeaderList>
+              <S.HeaderListItem>
+                <GithubLogo weight="bold" />
+                <p>lucianobarauna</p>
+              </S.HeaderListItem>
+              <S.HeaderListItem>
+                <Buildings weight="bold" />
+                <p>organização</p>
+              </S.HeaderListItem>
+              <S.HeaderListItem>
+                <Users weight="bold" />
+                <p>32 seguidores</p>
+              </S.HeaderListItem>
+            </S.HeaderList>
+          </S.HeaderContent>
         </S.Header>
         <S.WrapperOutlet>
           <Outlet />

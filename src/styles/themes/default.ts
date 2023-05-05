@@ -40,6 +40,8 @@ export const defaultTheme = {
     0: '0px',
     /** 6px */
     1.5: '0.375rem',
+    /** 8px */
+    2: '0.5rem',
     /** 36px */
     9: '2.25rem',
     /** 44px */
