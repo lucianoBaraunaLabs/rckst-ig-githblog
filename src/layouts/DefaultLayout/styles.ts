@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 export const Content = styled.main`
   ${({ theme }) => css`
     max-width: 832px;
-    padding: 0 ${theme.spacing[4]} ${theme.spacing[4]};
+    padding: 0 ${theme.spacing[4]} ${theme.spacing[14]};
     margin: 0 auto;
   `}
 `
