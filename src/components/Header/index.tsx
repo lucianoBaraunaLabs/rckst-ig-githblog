@@ -7,13 +7,15 @@ import {
   Users,
 } from 'phosphor-react'
 import { HeaderProps } from './types.ts'
-// import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { GithubContext } from '@/contexts/GithubContext.tsx'
 
 export function Header({ isHeaderPost }: HeaderProps) {
+  const { userName, userImg, bio, info } = useContext(GithubContext)
   return (
     <S.Wrapper isHeaderPost={isHeaderPost}>
       {!isHeaderPost ? (
-        <S.ImgProfile src="https://picsum.photos/500/500" alt="Imagem aqui" />
+        <S.ImgProfile src={userImg} alt="Imagem aqui" />
       ) : (
         <S.WrapperPost>
           <S.Link to="/">
@@ -29,8 +31,8 @@ export function Header({ isHeaderPost }: HeaderProps) {
         <S.Title>
           {!isHeaderPost ? (
             <>
-              Luciano Baraúna{' '}
-              <S.Anchor href="#">
+              {userName}
+              <S.Anchor href={info.githuUrl}>
                 GITHUB <ArrowSquareOut weight="bold" />
               </S.Anchor>
             </>
@@ -39,26 +41,19 @@ export function Header({ isHeaderPost }: HeaderProps) {
           )}
         </S.Title>
 
-        {!isHeaderPost && (
-          <S.Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. A,
-            asperiores repellat accusantium voluptatum quod, amet repudiandae,
-            labore ea nisi repellendus quasi! Corporis soluta quod dolores fuga
-            adipisci dicta numquam accusamus?
-          </S.Text>
-        )}
+        {!isHeaderPost && <S.Text>{bio}</S.Text>}
         <S.List>
           <S.ListItem>
             <GithubLogo weight="bold" />
-            <p>lucianobarauna</p>
+            <p>{info.githubName}</p>
           </S.ListItem>
           <S.ListItem>
             <Buildings weight="bold" />
-            <p>organização</p>
+            <p>{info.organization}</p>
           </S.ListItem>
           <S.ListItem>
             <Users weight="bold" />
-            <p>32 seguidores</p>
+            <p>{info.followers} seguidores</p>
           </S.ListItem>
         </S.List>
       </S.Content>
