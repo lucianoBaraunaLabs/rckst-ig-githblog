@@ -11,7 +11,7 @@ import { HeaderProps } from './types.ts'
 
 export function Header({ isHeaderPost }: HeaderProps) {
   return (
-    <S.Wrapper headerPost={isHeaderPost}>
+    <S.Wrapper isHeaderPost={isHeaderPost}>
       {!isHeaderPost ? (
         <S.ImgProfile src="https://picsum.photos/500/500" alt="Imagem aqui" />
       ) : (

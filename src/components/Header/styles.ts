@@ -1,5 +1,5 @@
 import styled, { DefaultTheme, css } from 'styled-components'
-import { WrapperStyles } from './types'
+import { HeaderProps } from './types'
 import { Link as RouterLink } from 'react-router-dom'
 
 const helperLink = (theme: DefaultTheme) => css`
@@ -12,7 +12,7 @@ const helperLink = (theme: DefaultTheme) => css`
   text-decoration: none;
 `
 
-export const Wrapper = styled.header<WrapperStyles>`
+export const Wrapper = styled.header<HeaderProps>`
   ${({ theme }) => css`
     align-items: center;
     background-color: ${theme.palette['base-profile']};
@@ -29,8 +29,8 @@ export const Wrapper = styled.header<WrapperStyles>`
       flex-direction: column;
     }
   `}
-  ${({ theme, headerPost }) =>
-    headerPost &&
+  ${({ theme, isHeaderPost }) =>
+    isHeaderPost &&
     css`
       flex-direction: column;
       align-items: normal;
