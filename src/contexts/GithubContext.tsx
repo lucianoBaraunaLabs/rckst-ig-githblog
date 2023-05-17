@@ -1,15 +1,18 @@
-import { ReactNode, createContext } from 'react'
+import { api } from '@/lib/axios'
+import { ReactNode, createContext, useEffect, useState } from 'react'
+
+export interface GithubInfoUser {
+  login: string
+  name: string
+  bio: string
+  avatarUrl: string
+  htmlUrl: string
+  company: string
+  followers: string
+}
 
 interface GithubContextType {
-  userName: string
-  userImg: string
-  bio: string
-  info: {
-    githubName: string
-    githuUrl: string
-    organization: string
-    followers: string
-  }
+  info: GithubInfoUser
 }
 
 export const GithubContext = createContext({} as GithubContextType)
@@ -19,18 +22,51 @@ interface GithubProviderProps {
 }
 
 export function GithubProvider({ children }: GithubProviderProps) {
+  const [githubInfo, setGithubInfo] = useState<GithubInfoUser>({
+    login: '',
+    name: '',
+    bio: '',
+    avatarUrl: '',
+    htmlUrl: '',
+    company: '',
+    followers: '',
+  })
+
+  const fetchGitUser = async () => {
+    try {
+      const response = await api.get('/users/lucianobarauna')
+      const {
+        login,
+        name,
+        bio,
+        avatar_url: avatarUrl,
+        html_url: htmlUrl,
+        company,
+        followers,
+      } = response.data
+
+      setGithubInfo({
+        login,
+        name,
+        bio,
+        avatarUrl,
+        htmlUrl,
+        company,
+        followers,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchGitUser()
+  }, [])
+
   return (
     <GithubContext.Provider
       value={{
-        userName: 'Luciano Baraúna',
-        userImg: 'https://picsum.photos/500/500',
-        bio: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. A, asperiores repellat accusantium voluptatum quod, amet repudiandae, labore ea nisi repellendus quasi! Corporis soluta quod dolores fuga adipisci dicta numquam accusamus?',
-        info: {
-          githubName: 'lucianobarauna',
-          githuUrl: 'https://github.com/lucianobarauna',
-          organization: 'organização',
-          followers: '32',
-        },
+        info: githubInfo,
       }}
     >
       {children}
