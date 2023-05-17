@@ -11,11 +11,12 @@ import { useContext } from 'react'
 import { GithubContext } from '@/contexts/GithubContext.tsx'
 
 export function Header({ isHeaderPost }: HeaderProps) {
-  const { userName, userImg, bio, info } = useContext(GithubContext)
+  const { info } = useContext(GithubContext)
+
   return (
     <S.Wrapper isHeaderPost={isHeaderPost}>
       {!isHeaderPost ? (
-        <S.ImgProfile src={userImg} alt="Imagem aqui" />
+        <S.ImgProfile src={info.avatarUrl} alt="Imagem aqui" />
       ) : (
         <S.WrapperPost>
           <S.Link to="/">
@@ -31,8 +32,8 @@ export function Header({ isHeaderPost }: HeaderProps) {
         <S.Title>
           {!isHeaderPost ? (
             <>
-              {userName}
-              <S.Anchor href={info.githuUrl}>
+              {info.name}
+              <S.Anchor href={info.htmlUrl}>
                 GITHUB <ArrowSquareOut weight="bold" />
               </S.Anchor>
             </>
@@ -41,15 +42,15 @@ export function Header({ isHeaderPost }: HeaderProps) {
           )}
         </S.Title>
 
-        {!isHeaderPost && <S.Text>{bio}</S.Text>}
+        {!isHeaderPost && <S.Text>{info.bio}</S.Text>}
         <S.List>
           <S.ListItem>
             <GithubLogo weight="bold" />
-            <p>{info.githubName}</p>
+            <p>{info.login}</p>
           </S.ListItem>
           <S.ListItem>
             <Buildings weight="bold" />
-            <p>{info.organization}</p>
+            <p>{info.company}</p>
           </S.ListItem>
           <S.ListItem>
             <Users weight="bold" />
