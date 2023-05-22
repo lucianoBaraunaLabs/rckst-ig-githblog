@@ -11,8 +11,14 @@ export interface GithubInfoUser {
   followers: string
 }
 
+export interface AppLoading {
+  infoUser: boolean
+  posts: boolean
+}
+
 interface GithubContextType {
-  info: GithubInfoUser
+  infoUser: GithubInfoUser
+  loading: AppLoading
 }
 
 export const GithubContext = createContext({} as GithubContextType)
@@ -21,7 +27,15 @@ interface GithubProviderProps {
   children: ReactNode
 }
 
+const userName = import.meta.env.VITE_GITHUB_USERNAME
+const repoName = import.meta.env.VITE_GITHUB_REPONAME
+
 export function GithubProvider({ children }: GithubProviderProps) {
+  const [isLoading, setIsLoading] = useState<AppLoading>({
+    infoUser: true,
+    posts: true,
+  })
+
   const [githubInfo, setGithubInfo] = useState<GithubInfoUser>({
     login: '',
     name: '',
@@ -34,7 +48,13 @@ export function GithubProvider({ children }: GithubProviderProps) {
 
   const fetchGitUser = async () => {
     try {
-      const response = await api.get('/users/lucianobarauna')
+      setIsLoading((state) => {
+        return {
+          ...state,
+          infoUser: true,
+        }
+      })
+      const response = await api.get(`/users/${userName}`)
       const {
         login,
         name,
@@ -56,17 +76,50 @@ export function GithubProvider({ children }: GithubProviderProps) {
       })
     } catch (error) {
       console.error(error)
+    } finally {
+      setIsLoading((state) => {
+        return {
+          ...state,
+          infoUser: false,
+        }
+      })
+    }
+  }
+
+  const fetchPosts = async (query = '') => {
+    try {
+      setIsLoading((state) => {
+        return {
+          ...state,
+          posts: true,
+        }
+      })
+      const response = await api.get(
+        `https://api.github.com/search/issues?q=${query}%20repo:${repoName}`,
+      )
+      console.log(response.data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setIsLoading((state) => {
+        return {
+          ...state,
+          posts: false,
+        }
+      })
     }
   }
 
   useEffect(() => {
     fetchGitUser()
+    fetchPosts()
   }, [])
 
   return (
     <GithubContext.Provider
       value={{
-        info: githubInfo,
+        infoUser: githubInfo,
+        loading: isLoading,
       }}
     >
       {children}

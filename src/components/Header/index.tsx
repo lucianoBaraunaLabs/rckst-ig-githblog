@@ -11,12 +11,13 @@ import { useContext } from 'react'
 import { GithubContext } from '@/contexts/GithubContext.tsx'
 
 export function Header({ isHeaderPost }: HeaderProps) {
-  const { info } = useContext(GithubContext)
+  const { infoUser, loading } = useContext(GithubContext)
 
   return (
     <S.Wrapper isHeaderPost={isHeaderPost}>
+      {loading.infoUser && <>carregando...</>}
       {!isHeaderPost ? (
-        <S.ImgProfile src={info.avatarUrl} alt="Imagem aqui" />
+        <S.ImgProfile src={infoUser.avatarUrl} alt="Imagem aqui" />
       ) : (
         <S.WrapperPost>
           <S.Link to="/">
@@ -32,8 +33,8 @@ export function Header({ isHeaderPost }: HeaderProps) {
         <S.Title>
           {!isHeaderPost ? (
             <>
-              {info.name}
-              <S.Anchor href={info.htmlUrl}>
+              {infoUser.name}
+              <S.Anchor href={infoUser.htmlUrl}>
                 GITHUB <ArrowSquareOut weight="bold" />
               </S.Anchor>
             </>
@@ -42,19 +43,19 @@ export function Header({ isHeaderPost }: HeaderProps) {
           )}
         </S.Title>
 
-        {!isHeaderPost && <S.Text>{info.bio}</S.Text>}
+        {!isHeaderPost && <S.Text>{infoUser.bio}</S.Text>}
         <S.List>
           <S.ListItem>
             <GithubLogo weight="bold" />
-            <p>{info.login}</p>
+            <p>{infoUser.login}</p>
           </S.ListItem>
           <S.ListItem>
             <Buildings weight="bold" />
-            <p>{info.company}</p>
+            <p>{infoUser.company}</p>
           </S.ListItem>
           <S.ListItem>
             <Users weight="bold" />
-            <p>{info.followers} seguidores</p>
+            <p>{infoUser.followers} seguidores</p>
           </S.ListItem>
         </S.List>
       </S.Content>
