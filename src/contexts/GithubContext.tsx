@@ -1,4 +1,4 @@
-import { api } from '@/lib/axios'
+// import { api } from '@/lib/axios'
 import { mockPosts, mockUser } from '@/mocks'
 import {
   ReactNode,
@@ -35,7 +35,7 @@ interface GithubProviderProps {
 }
 
 // const userName = import.meta.env.VITE_GITHUB_USERNAME
-const repoName = import.meta.env.VITE_GITHUB_REPONAME
+// const repoName = import.meta.env.VITE_GITHUB_REPONAME
 
 export const GithubProvider = ({ children }: GithubProviderProps) => {
   const [isLoading, setIsLoading] = useState<AppLoading>({
