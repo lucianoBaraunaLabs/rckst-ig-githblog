@@ -1,5 +1,11 @@
 import { api } from '@/lib/axios'
-import { ReactNode, createContext, useEffect, useState } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
 export interface GithubInfoUser {
   login: string
@@ -30,7 +36,7 @@ interface GithubProviderProps {
 const userName = import.meta.env.VITE_GITHUB_USERNAME
 const repoName = import.meta.env.VITE_GITHUB_REPONAME
 
-export function GithubProvider({ children }: GithubProviderProps) {
+export const GithubProvider = ({ children }: GithubProviderProps) => {
   const [isLoading, setIsLoading] = useState<AppLoading>({
     infoUser: true,
     posts: true,
@@ -125,4 +131,13 @@ export function GithubProvider({ children }: GithubProviderProps) {
       {children}
     </GithubContext.Provider>
   )
+}
+
+export const useGithubApi = () => {
+  const context = useContext(GithubContext)
+  if (!context) {
+    throw new Error('useGithubApi must be used within an GithubProvider')
+  }
+
+  return context
 }
