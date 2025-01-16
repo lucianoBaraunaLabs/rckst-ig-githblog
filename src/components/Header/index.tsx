@@ -7,11 +7,10 @@ import {
   Users,
 } from 'phosphor-react'
 import { HeaderProps } from './types.ts'
-import { useContext } from 'react'
-import { GithubContext } from '@/contexts/GithubContext.tsx'
+import { useGithubApi } from '@/contexts/GithubContext.tsx'
 
 export function Header({ isHeaderPost }: HeaderProps) {
-  const { infoUser, loading } = useContext(GithubContext)
+  const { infoUser, loading } = useGithubApi()
 
   return (
     <S.Wrapper isHeaderPost={isHeaderPost}>
