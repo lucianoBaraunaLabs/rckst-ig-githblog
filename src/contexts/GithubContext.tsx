@@ -1,4 +1,5 @@
 import { api } from '@/lib/axios'
+import { mockPosts, mockUser } from '@/mocks'
 import {
   ReactNode,
   createContext,
@@ -14,7 +15,7 @@ export interface GithubInfoUser {
   avatarUrl: string
   htmlUrl: string
   company: string
-  followers: string
+  followers: number
 }
 
 export interface AppLoading {
@@ -33,7 +34,7 @@ interface GithubProviderProps {
   children: ReactNode
 }
 
-const userName = import.meta.env.VITE_GITHUB_USERNAME
+// const userName = import.meta.env.VITE_GITHUB_USERNAME
 const repoName = import.meta.env.VITE_GITHUB_REPONAME
 
 export const GithubProvider = ({ children }: GithubProviderProps) => {
@@ -49,7 +50,7 @@ export const GithubProvider = ({ children }: GithubProviderProps) => {
     avatarUrl: '',
     htmlUrl: '',
     company: '',
-    followers: '',
+    followers: 0,
   })
 
   const fetchGitUser = async () => {
@@ -60,7 +61,9 @@ export const GithubProvider = ({ children }: GithubProviderProps) => {
           infoUser: true,
         }
       })
-      const response = await api.get(`/users/${userName}`)
+      // @TODO: REMOVER MOCK QUANDO TERMINAR DE IMPLEMENTAR
+      // const response = await api.get(`/users/${userName}`)
+      const response = mockUser
       const {
         login,
         name,
@@ -100,10 +103,11 @@ export const GithubProvider = ({ children }: GithubProviderProps) => {
           posts: true,
         }
       })
-      const response = await api.get(
-        `https://api.github.com/search/issues?q=${query}%20repo:${repoName}`,
-      )
-      console.log(response.data)
+      // const response = await api.get(
+      //   `https://api.github.com/search/issues?q=${query}%20repo:${repoName}`,
+      // )
+      const response = mockPosts
+      console.log(response)
     } catch (e) {
       console.error(e)
     } finally {
