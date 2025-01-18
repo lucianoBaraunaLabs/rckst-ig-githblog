@@ -34,7 +34,7 @@ export function Blog() {
     async (query = '') => {
       try {
         setIsLoading(true)
-        const response = await api.get<any, AxiosResponse<IPostResponse>>(
+        const response = await api.get<unknown, AxiosResponse<IPostResponse>>(
           `/search/issues?q=${query}%20label:published%20repo:${organizaionName}/${repoName}`,
         )
 

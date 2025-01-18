@@ -26,10 +26,12 @@ export function Post() {
     } finally {
       setIsLoading(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postData])
 
   useEffect(() => {
     getPostDetails()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
