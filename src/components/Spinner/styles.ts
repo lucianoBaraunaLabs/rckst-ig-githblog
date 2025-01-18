@@ -29,7 +29,7 @@ export const SpinnerContainer = styled.div`
       display: block;
       width: 25%;
       height: 25%;
-      background-color: ${({ theme }) => theme.palette['base-subtitle']};
+      background-color: ${({ theme }) => theme.colors['base-subtitle']};
       border-radius: 100%;
       animation: sk-chase-dot-before 2s infinite ease-in-out both;
     }
