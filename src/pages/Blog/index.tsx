@@ -32,7 +32,6 @@ export function Blog() {
 
   const getPosts = useCallback(
     async (query: string = '') => {
-      console.log('oaoa')
       try {
         setIsLoading(true)
         const response = await api.get<any, AxiosResponse<IPostResponse>>(
@@ -44,11 +43,13 @@ export function Blog() {
         setIsLoading(false)
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [posts],
   )
 
   useEffect(() => {
     getPosts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
