@@ -15,8 +15,8 @@ Projeto 03 - Desafio curso ignite rockeseat
 - Zod
 
 # Desenvolvimento
-Para iniciar o desenvolvimento, digite: `yarn dev`
+Para iniciar o desenvolvimento, digite: `npm run dev`
 
 # Produção
-Para gerar para produção, digite: `yarn build`
+Para gerar para produção, digite: `npm run build`
 
