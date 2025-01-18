@@ -10,6 +10,7 @@ export const ProfileContainer = styled.section`
   padding: 2rem 2.5rem;
   display: flex;
   gap: 2rem;
+  flex-wrap: wrap;
 `
 
 export const ProfilePicture = styled.img`

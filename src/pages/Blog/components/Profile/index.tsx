@@ -25,7 +25,7 @@ export function Profile() {
   const getProfileData = useCallback(async () => {
     try {
       setIsLoading(true)
-      const response = await api.get<any, AxiosResponse<ProfileData>>(
+      const response = await api.get<unknown, AxiosResponse<ProfileData>>(
         `/users/${username}`,
       )
       setProfileData(response.data)
