@@ -1,20 +1,41 @@
+import { useCallback, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { api } from '../../lib/axios'
 import { IPost } from '../Blog'
-import { PostContainer } from './styles'
+import { PostContent } from './components/PostContent'
+import { PostHeader } from './components/PostHeader'
 
-interface PostProps {
-  post: IPost
-}
+const organizaionName = import.meta.env.VITE_GITHUB_ORGANIZATIONNAME
+const repoName = import.meta.env.VITE_GITHUB_REPONAME
 
-export function Post({ post }: PostProps) {
-  const formattedDate = post.created_at
+export function Post() {
+  const [postData, setPostData] = useState<IPost>({} as IPost)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const { id } = useParams()
+
+  const getPostDetails = useCallback(async () => {
+    try {
+      setIsLoading(true)
+
+      const response = await api.get(
+        `/repos/${organizaionName}/${repoName}/issues/${id}`,
+      )
+
+      setPostData(response.data)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [postData])
+
+  useEffect(() => {
+    getPostDetails()
+  }, [])
 
   return (
-    <PostContainer to={`/post/${post.number}`}>
-      <div>
-        <strong>{post.title}</strong>
-        <span>{formattedDate}</span>
-      </div>
-      <p>{post.body}</p>
-    </PostContainer>
+    <>
+      <PostHeader isLoading={isLoading} postData={postData} />
+      {!isLoading && <PostContent content={postData.body} />}
+    </>
   )
 }

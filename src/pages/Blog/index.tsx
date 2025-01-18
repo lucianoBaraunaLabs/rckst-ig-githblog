@@ -2,7 +2,7 @@ import { Spinner } from '@/components/Spinner'
 import { Profile } from './components/Profile'
 import { SearchInput } from './components/SearchInput'
 import { PostsListContainer } from './styles'
-import { Post } from '../Post'
+import { Post } from './components/Post'
 import { useCallback, useEffect, useState } from 'react'
 import { api } from '@/lib/axios'
 import { AxiosResponse } from 'axios'
@@ -31,7 +31,7 @@ export function Blog() {
   const [isLoading, setIsLoading] = useState(true)
 
   const getPosts = useCallback(
-    async (query: string = '') => {
+    async (query = '') => {
       try {
         setIsLoading(true)
         const response = await api.get<any, AxiosResponse<IPostResponse>>(
