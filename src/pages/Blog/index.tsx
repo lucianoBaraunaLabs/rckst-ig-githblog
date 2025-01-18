@@ -3,7 +3,12 @@ import { Profile } from './components/Profile'
 import { SearchInput } from './components/SearchInput'
 import { PostsListContainer } from './styles'
 import { Post } from '../Post'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { api } from '@/lib/axios'
+import { AxiosResponse } from 'axios'
+
+const organizaionName = import.meta.env.VITE_GITHUB_ORGANIZATIONNAME
+const repoName = import.meta.env.VITE_GITHUB_REPONAME
 
 export interface IPost {
   title: string
@@ -17,13 +22,34 @@ export interface IPost {
   }
 }
 
+interface IPostResponse {
+  items: IPost[]
+}
+
 export function Blog() {
   const [posts, setPosts] = useState<IPost[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  function getPosts() {
-    console.log('oaoa')
-  }
+  const getPosts = useCallback(
+    async (query: string = '') => {
+      console.log('oaoa')
+      try {
+        setIsLoading(true)
+        const response = await api.get<any, AxiosResponse<IPostResponse>>(
+          `/search/issues?q=${query}%20label:published%20repo:${organizaionName}/${repoName}`,
+        )
+
+        setPosts(response.data.items)
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [posts],
+  )
+
+  useEffect(() => {
+    getPosts()
+  }, [])
 
   return (
     <>
