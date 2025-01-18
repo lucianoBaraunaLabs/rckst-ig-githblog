@@ -1,7 +1,20 @@
-export function Post() {
+import { IPost } from '../Blog'
+import { PostContainer } from './styles'
+
+interface PostProps {
+  post: IPost
+}
+
+export function Post({ post }: PostProps) {
+  const formattedDate = post.created_at
+
   return (
-    <>
-      <h1>Olá sou um post </h1>
-    </>
+    <PostContainer to={`/post/${post.number}`}>
+      <div>
+        <strong>{post.title}</strong>
+        <span>{formattedDate}</span>
+      </div>
+      <p>{post.body}</p>
+    </PostContainer>
   )
 }
