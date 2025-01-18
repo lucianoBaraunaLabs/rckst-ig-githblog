@@ -1,11 +1,12 @@
 import { ExternalLink } from '@/components/ExternalLink'
 import { ProfileContainer, ProfileDetails, ProfilePicture } from './styles'
-import { useState } from 'react'
-// import { api } from '@/lib/axios'
+import { useCallback, useEffect, useState } from 'react'
 import { Spinner } from '@/components/Spinner'
 import { Building, GithubLogo, UsersThree } from '@phosphor-icons/react'
+import { api } from '@/lib/axios'
+import { AxiosResponse } from 'axios'
 
-// const username = import.meta.env.VITE_GITHUB_USERNAME
+const username = import.meta.env.VITE_GITHUB_USERNAME
 
 interface ProfileData {
   login: string
@@ -20,6 +21,24 @@ interface ProfileData {
 export function Profile() {
   const [profileData, setProfileData] = useState<ProfileData>({} as ProfileData)
   const [isLoading, setIsLoading] = useState(true)
+
+  const getProfileData = useCallback(async () => {
+    try {
+      setIsLoading(true)
+      const response = await api.get<any, AxiosResponse<ProfileData>>(
+        `/users/${username}`,
+      )
+      setProfileData(response.data)
+    } finally {
+      setIsLoading(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileData])
+
+  useEffect(() => {
+    getProfileData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <ProfileContainer>
